@@ -6,6 +6,8 @@ Built with [Astro](https://astro.build), no UI framework and no client-side Java
 
 ## Local development
 
+Node comes from `.tool-versions`, so `asdf install` picks up the right version. Both workflows read the same file, so local and CI cannot drift.
+
 ```bash
 npm install
 npm run dev      # http://localhost:4321
@@ -29,6 +31,7 @@ npm run refresh:projects  # pull the project list from the GitHub API
 | `src/styles/global.css` | Whole stylesheet, custom properties, light and dark themes |
 | `public/` | Copied verbatim to the site root, including `CNAME` |
 | `scripts/refresh-projects.mjs` | Regenerates the project list from the GitHub API |
+| `.tool-versions` | Node version, read by asdf locally and by both workflows in CI |
 
 ## Projects
 
