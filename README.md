@@ -28,6 +28,8 @@ npm run check    # type-check .astro and .ts files
 
 To add or edit a project, edit `src/data/projects.ts`. The homepage shows the three named in `featuredNames` at the bottom of that file, in the order listed there.
 
+A project earns a spot if it is public, not archived, and has been pushed within the last year. The featured three are exempt from the age rule, because the homepage picks are editorial rather than a reflection of what happened to be touched most recently.
+
 ## Deployment
 
 Every push to `main` triggers `.github/workflows/deploy.yml`, which builds with `withastro/action` and publishes with `actions/deploy-pages`. No manual step.
