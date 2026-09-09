@@ -24,8 +24,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Check out the branch head, not github.sha. When refresh-projects.yml calls
+      # this workflow, github.sha is the commit from before its refresh commit, so
+      # the default would build and publish the content it just replaced.
       - name: Check out the repository
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
 
       - name: Install, build, and upload the site
         uses: withastro/action@v6
