@@ -26,7 +26,7 @@ npm run check    # type-check .astro and .ts files
 | `src/styles/global.css` | Whole stylesheet, custom properties, light and dark themes |
 | `public/` | Copied verbatim to the site root, including `CNAME` |
 
-To add or edit a project, edit `src/data/projects.ts`. Setting `featured: true` also surfaces it on the homepage.
+To add or edit a project, edit `src/data/projects.ts`. The homepage shows the three named in `featuredNames` at the bottom of that file, in the order listed there.
 
 ## Deployment
 
