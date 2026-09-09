@@ -1,6 +1,6 @@
-# bsquidwrd.com
+# bsquidwrd.dev
 
-Source for [bsquidwrd.com](https://bsquidwrd.com), a personal portfolio and about site.
+Source for [bsquidwrd.dev](https://bsquidwrd.dev), a personal portfolio and about site.
 
 Built with [Astro](https://astro.build), no UI framework and no client-side JavaScript. Hosted on GitHub Pages.
 
@@ -38,14 +38,11 @@ The repository must be public for GitHub Pages to serve it on a free account, an
 
 ## Custom domain
 
-`public/CNAME` holds `bsquidwrd.com`, so it lands at the root of every build. DNS needs to point at GitHub:
+`public/CNAME` holds `bsquidwrd.dev`, so it lands at the root of every build. Both the apex and `www` are ALIAS records pointing at `bsquidwrd.github.io`.
 
 | Record | Name | Value |
 | --- | --- | --- |
-| A | `@` | `185.199.108.153` |
-| A | `@` | `185.199.109.153` |
-| A | `@` | `185.199.110.153` |
-| A | `@` | `185.199.111.153` |
-| CNAME | `www` | `bsquidwrd.github.io` |
+| ALIAS | `@` | `bsquidwrd.github.io` |
+| ALIAS | `www` | `bsquidwrd.github.io` |
 
-Once the records resolve, enable "Enforce HTTPS" in the repository's Pages settings. The certificate takes a few minutes to issue.
+If you ever move to a provider without ALIAS support at the apex, the fallback is four A records: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`, with `www` as a plain CNAME.
