@@ -48,7 +48,9 @@ Two things stay hand-edited, both in `src/data/projects.ts`:
 
 ## Deployment
 
-Every push to `main` triggers `.github/workflows/deploy.yml`, which builds with `withastro/action` and publishes with `actions/deploy-pages`. No manual step.
+Every push to `main` triggers `.github/workflows/deploy.yml`: `npm ci`, `npm run build`, then `actions/upload-pages-artifact` and `actions/deploy-pages`. No manual step.
+
+This used to call `withastro/action`, which bundles package-manager detection, an npm cache, and an Astro build cache into one step. The detection is worth nothing to a repo that will always be npm, and the Astro cache was storing an empty `node_modules/.astro` on every commit, since the site has no content collections and no images in Astro's pipeline. Running the steps directly keeps the npm cache through `setup-node`, lets both workflows read `.tool-versions` the same way, and swaps `npm install` for `npm ci` so CI installs exactly what the lockfile pins.
 
 The repository must be public for GitHub Pages to serve it on a free account, and Pages must be set to build from GitHub Actions rather than a branch.
 
