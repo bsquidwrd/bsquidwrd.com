@@ -1,0 +1,6 @@
+{
+  // Long lines are fine; prose is not hard-wrapped and tables carry long values.
+  "MD013": false,
+  // Inline HTML is occasionally needed inside generated tables.
+  "MD033": false
+}

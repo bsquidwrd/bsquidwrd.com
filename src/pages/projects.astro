@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { projects } from '../data/projects';
+---
+
+<BaseLayout
+  title="Projects | bsquidwrd"
+  description="Open source projects by bsquidwrd, from Discord and Twitch bots to small admin utilities."
+>
+  <h1>Projects</h1>
+  <p class="lede">
+    Public repositories worth pointing at. Everything here lives on <a
+      href="https://github.com/bsquidwrd">GitHub</a
+    >.
+  </p>
+
+  <section class="section">
+    <h2>{projects.length} projects</h2>
+    <ul class="card-list">
+      {
+        projects.map((project) => (
+          <li>
+            <a class="card" href={project.url}>
+              <div class="card-head">
+                <h3>{project.name}</h3>
+                <span class="meta">
+                  {project.language && <span class="tag">{project.language}</span>}
+                  {project.stars ? <span>{project.stars} &#9733;</span> : null}
+                </span>
+              </div>
+              <p>{project.description}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

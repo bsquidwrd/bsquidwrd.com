@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { featuredProjects } from '../data/projects';
+import { links } from '../data/links';
+---
+
+<BaseLayout
+  title="bsquidwrd"
+  description="Squid, a developer who builds Discord and Twitch tooling and spends the day job in cloud infrastructure."
+>
+  <section class="intro">
+    <img src="/avatar.jpg" alt="" width="92" height="92" />
+    <div class="intro-body">
+      <p class="eyebrow">bsquidwrd</p>
+      <h1>Hey, I&rsquo;m Squid.</h1>
+      <p class="lede">
+        I build things for people who stream and the communities around them, mostly Discord bots
+        and Twitch tooling, and I spend the day job wrangling cloud infrastructure.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>About</h2>
+    <p>
+      Most of what I publish grows out of a problem I hit myself. <a
+        href="https://github.com/bsquidwrd/LiveBot">LiveBot</a
+      > started because I wanted my Discord server to know when I went live without me having to say
+      so, and it has been the project I keep coming back to. The rest is a mix of Twitch API
+      experiments, small utilities for other admins, and whatever I am learning at the time.
+    </p>
+    <p>
+      Day to day I work in infrastructure: Terraform, AWS, and the pipelines that glue them
+      together. Off the clock it is Go, C#, Python, and a homelab that exists mainly so I have
+      somewhere to break things safely.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2>Selected projects</h2>
+    <ul class="card-list">
+      {
+        featuredProjects.map((project) => (
+          <li>
+            <a class="card" href={project.url}>
+              <div class="card-head">
+                <h3>{project.name}</h3>
+                <span class="meta">
+                  {project.language && <span class="tag">{project.language}</span>}
+                  {project.stars ? <span>{project.stars} &#9733;</span> : null}
+                </span>
+              </div>
+              <p>{project.description}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="more"><a href="/projects">See everything &rarr;</a></p>
+  </section>
+
+  <section class="section">
+    <h2>Elsewhere</h2>
+    <ul class="links">
+      {
+        links.map((link) => (
+          <li>
+            <a class="link-row" href={link.href}>
+              <Icon name={link.icon} />
+              <span>
+                {link.label}
+                <small>{link.note}</small>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
