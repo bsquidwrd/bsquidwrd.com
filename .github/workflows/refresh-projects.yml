@@ -47,7 +47,10 @@ jobs:
   deploy:
     needs: refresh
     if: needs.refresh.outputs.changed == 'true'
+    # A called workflow cannot request more than the caller grants, and deploy.yml's
+    # own prune job needs actions: write, so it has to be granted here too.
     permissions:
+      actions: write
       contents: read
       pages: write
       id-token: write
