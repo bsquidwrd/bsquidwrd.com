@@ -1,0 +1,23 @@
+name: Prune workflow runs
+description: Keep only the five most recent runs of each workflow, deleting older completed ones.
+runs:
+  using: composite
+  steps:
+    - name: Delete runs beyond the five most recent
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        GH_REPO: ${{ github.repository }}
+      run: |
+        set -euo pipefail
+        # The five kept runs include any still in progress, so the workflow doing the
+        # pruning never deletes itself. Only completed runs are eligible for deletion.
+        gh api "repos/${GH_REPO}/actions/workflows?per_page=100" --jq '.workflows[].id' \
+        | while read -r workflow_id; do
+            gh api "repos/${GH_REPO}/actions/workflows/${workflow_id}/runs?per_page=100" \
+              --jq '.workflow_runs | sort_by(.created_at) | reverse | .[5:] | .[] | select(.status == "completed") | .id' \
+            | while read -r run_id; do
+                gh api -X DELETE "repos/${GH_REPO}/actions/runs/${run_id}" --silent
+                echo "Deleted run ${run_id}"
+              done
+          done

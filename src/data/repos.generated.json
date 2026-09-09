@@ -1,0 +1,31 @@
+[
+  {
+    "name": "LiveBot",
+    "description": "Notify your Discord when you go live Streaming!",
+    "url": "https://github.com/bsquidwrd/LiveBot",
+    "language": "C#",
+    "stars": 11,
+    "pushedAt": "2026-03-22T23:26:33Z"
+  },
+  {
+    "name": "streamerbot-assets",
+    "description": "Misc personal resources used for streamer.bot",
+    "url": "https://github.com/bsquidwrd/streamerbot-assets",
+    "language": "JavaScript",
+    "pushedAt": "2025-11-14T02:01:15Z"
+  },
+  {
+    "name": "discord-user-reminder",
+    "description": "Discord app that works in any Discord context: DMs, servers, threads, voice channels, and more. Supports both user-install and guild-install.",
+    "url": "https://github.com/bsquidwrd/discord-user-reminder",
+    "language": "TypeScript",
+    "pushedAt": "2025-08-28T00:47:08Z"
+  },
+  {
+    "name": "TwitchChannelPointCalculator",
+    "description": "Calculate how long it takes to earn the desired number of channel points.",
+    "url": "https://github.com/bsquidwrd/TwitchChannelPointCalculator",
+    "language": "TypeScript",
+    "pushedAt": "2025-06-16T17:35:28Z"
+  }
+]

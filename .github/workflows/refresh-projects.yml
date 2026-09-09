@@ -1,0 +1,68 @@
+name: Refresh projects
+
+on:
+  # 09:00 UTC on the first of each month.
+  schedule:
+    - cron: "0 9 1 * *"
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Refresh project data from the GitHub API
+        run: node scripts/refresh-projects.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Commit any changes
+        id: commit
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- src/data/repos.generated.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Project data is already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/repos.generated.json
+          git commit -m "chore: Refresh project data from the GitHub API"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+  # A push made with GITHUB_TOKEN does not trigger the deploy workflow, so call it.
+  deploy:
+    needs: refresh
+    if: needs.refresh.outputs.changed == 'true'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/deploy.yml
+
+  prune:
+    needs: [refresh, deploy]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+
+      - name: Prune old workflow runs
+        uses: ./.github/actions/prune-runs
